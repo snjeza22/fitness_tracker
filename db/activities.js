@@ -13,8 +13,14 @@ async function createActivity({ name, description }) {
 }
 
 async function getAllActivities() {
+ 
+  const {rows } = await client.query(`
+  SELECT name, description
+  FROM activities;
+  `);
+  return rows;
 //   // select and return an array of all activities
-// }
+ }
 
 // async function getActivityById(id) {}
 
@@ -31,7 +37,7 @@ async function getAllActivities() {
 // }
 
 module.exports = {
-  //getAllActivities,
+  getAllActivities,
   //getActivityById,
   //getActivityByName,
   //attachActivitiesToRoutines,
