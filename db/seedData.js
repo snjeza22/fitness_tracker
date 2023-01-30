@@ -6,8 +6,11 @@ async function dropTables() {
   console.log("Dropping All Tables...")
   // drop all tables, in the correct order
   await client.query(`
+  DROP TABLE IF EXISTS activities;
+  DROP TABLE IF EXISTS routines;
   DROP TABLE IF EXISTS users;
-  DROP TABLE IF EXISTS activities`)
+  
+  `)
 }
 
 async function createTables() {
@@ -18,12 +21,19 @@ async function createTables() {
     username varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL
   );
+  
   CREATE TABLE activities (
     id SERIAL PRIMARY KEY,
     name varchar(255) UNIQUE NOT NULL,
     description TEXT NOT NULL
-  )
-  
+  );
+  CREATE TABLE routines (
+    id SERIAL PRIMARY KEY,
+    creatorId INTEGER REFERENCES users(id),
+    isPublic BOOLEAN DEFAULT false,
+    name varchar(255) UNIQUE NOT NULL,
+    goal TEXT NOT NULL
+  );
   `)
    
  
