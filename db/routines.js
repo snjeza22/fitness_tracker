@@ -13,7 +13,7 @@ return routine;
 
 // async function getRoutineById(id) {}
 
-// async function getRoutinesWithoutActivities() {}
+async function getRoutinesWithoutActivities() {}
 
 // async function getAllRoutines() {}
 
@@ -31,7 +31,7 @@ return routine;
 
 module.exports = {
   //getRoutineById,
-  // getRoutinesWithoutActivities,
+  getRoutinesWithoutActivities,
   // getAllRoutines,
   // getAllPublicRoutines,
   // getAllRoutinesByUser,

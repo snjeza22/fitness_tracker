@@ -12,7 +12,7 @@ async function createActivity({ name, description }) {
     return activity;
 }
 
-// async function getAllActivities() {
+async function getAllActivities() {
 //   // select and return an array of all activities
 // }
 

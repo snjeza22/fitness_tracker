@@ -5,23 +5,32 @@ async function addActivityToRoutine({
   activityId,
   count,
   duration,
-}) {}
+}) {
+  const { rows: [ addRoutine ] } = await client.query(`
+  INSERT INTO routine_activities (routineId, activityId, count, duration) 
+  VALUES($1, $2, $3, $4)
+  RETURNING *;
+`, [routineId, activityId, count, duration]);
 
-async function getRoutineActivityById(id) {}
+return addRoutine;
+}
 
-async function getRoutineActivitiesByRoutine({ id }) {}
 
-async function updateRoutineActivity({ id, ...fields }) {}
+// async function getRoutineActivityById(id) {}
 
-async function destroyRoutineActivity(id) {}
+// async function getRoutineActivitiesByRoutine({ id }) {}
 
-async function canEditRoutineActivity(routineActivityId, userId) {}
+// async function updateRoutineActivity({ id, ...fields }) {}
+
+// async function destroyRoutineActivity(id) {}
+
+// async function canEditRoutineActivity(routineActivityId, userId) {}
 
 module.exports = {
-  getRoutineActivityById,
+  //getRoutineActivityById,
   addActivityToRoutine,
-  getRoutineActivitiesByRoutine,
-  updateRoutineActivity,
-  destroyRoutineActivity,
-  canEditRoutineActivity,
+  // getRoutineActivitiesByRoutine,
+  // updateRoutineActivity,
+  // destroyRoutineActivity,
+  // canEditRoutineActivity,
 };
