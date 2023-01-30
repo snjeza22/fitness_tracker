@@ -5,23 +5,31 @@ const client = require("./client");
 // user functions
 async function createUser({ username, password }) {
   
-}
+    const { rows: [ user ] } = await client.query(`
+      INSERT INTO users(username, password) 
+      VALUES($1, $2)
+      RETURNING *;
+    `, [username, password]);
 
-async function getUser({ username, password }) {
+    return user;
+  }
 
-}
 
-async function getUserById(userId) {
+// async function getUser({ username, password }) {
 
-}
+// }
 
-async function getUserByUsername(userName) {
+// async function getUserById(userId) {
 
-}
+// }
+
+// async function getUserByUsername(userName) {
+
+// }
 
 module.exports = {
   createUser,
-  getUser,
-  getUserById,
-  getUserByUsername,
+  //getUser,
+  //getUserById,
+  //getUserByUsername,
 }
