@@ -11,11 +11,29 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
 return routine;
 }
 
-// async function getRoutineById(id) {}
+async function getRoutineById(id) {
 
-async function getRoutinesWithoutActivities() {}
+  const { rows: [ routine ] } = await client.query(`
+      SELECT creatorId, isPublic, name, goal
+      FROM users
+      WHERE id=${ id }
+    `);
 
-// async function getAllRoutines() {}
+    return routine;
+}
+
+async function getRoutinesWithoutActivities() {
+
+  
+}
+
+async function getAllRoutines() {
+
+  const { rows: routine} = await client.query(`
+  SELECT * FROM routines
+  `);
+  return routine
+}
 
 // async function getAllPublicRoutines() {}
 
@@ -30,9 +48,9 @@ async function getRoutinesWithoutActivities() {}
 // async function destroyRoutine(id) {}
 
 module.exports = {
-  //getRoutineById,
+  getRoutineById,
   getRoutinesWithoutActivities,
-  // getAllRoutines,
+  getAllRoutines,
   // getAllPublicRoutines,
   // getAllRoutinesByUser,
   // getPublicRoutinesByUser,

@@ -15,7 +15,7 @@ async function createActivity({ name, description }) {
 async function getAllActivities() {
  
   const {rows } = await client.query(`
-  SELECT name, description
+  SELECT *
   FROM activities;
   `);
   return rows;
