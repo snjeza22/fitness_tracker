@@ -23,21 +23,25 @@ async function getRoutineById(id) {
 }
 
 async function getRoutinesWithoutActivities() {
-const {rows: routineWA} = await client.query(`
-SELECT id FROM routines
-INNER JOIN routine_activities
-ON routines.id= routine_activities."routineId"
-`)
-  return routineWA
-}
-
-async function getAllRoutines() {
-
-  const { rows: routine} = await client.query(`
+// const {rows: [routineWA]} = await client.query(`
+// // SELECT "creatorId" FROM routines
+// // INNER JOIN routine_activities
+// // ON routines."creatorId"= routine_activities."routineId"
+// `)
+  
+const { rows: routine} = await client.query(`
   SELECT * FROM routines
   `);
   return routine
 }
+
+// async function getAllRoutines() {
+
+//   const { rows: routine} = await client.query(`
+//   SELECT * FROM routines
+//   `);
+//   return routine
+// }
 
 // async function getAllPublicRoutines() {}
 
@@ -54,7 +58,7 @@ async function getAllRoutines() {
 module.exports = {
   getRoutineById,
   getRoutinesWithoutActivities,
-  getAllRoutines,
+  //getAllRoutines,
   // getAllPublicRoutines,
   // getAllRoutinesByUser,
   // getPublicRoutinesByUser,
