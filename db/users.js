@@ -10,7 +10,7 @@ async function createUser({ username, password }) {
       VALUES($1, $2)
       RETURNING *;
     `, [username, password]);
-
+    delete user.password
     return user;
   }
 
@@ -23,13 +23,18 @@ async function createUser({ username, password }) {
 
 // }
 
-// async function getUserByUsername(userName) {
-
-// }
+ async function getUserByUsername(userName) {
+  const { rows: [ user ]} = await client.query(`
+      SELECT username, password FROM users
+      WHERE id = 3
+  `)
+  console.log(user, "THIS IS USER")
+  return user
+ }
 
 module.exports = {
   createUser,
   //getUser,
   //getUserById,
-  //getUserByUsername,
+  getUserByUsername,
 }
