@@ -23,8 +23,11 @@ async function getRoutineById(id) {
 }
 
 async function getRoutinesWithoutActivities() {
-
-  
+const {rows: routine} = await client.query(`
+SELECT * FROM routine_activities
+WHERE activityId= undefined
+`)
+  return routine
 }
 
 async function getAllRoutines() {
