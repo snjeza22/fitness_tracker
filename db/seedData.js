@@ -29,15 +29,15 @@ async function createTables() {
   );
   CREATE TABLE routines (
     id SERIAL PRIMARY KEY,
-    creatorId INTEGER REFERENCES users(id),
-    isPublic BOOLEAN DEFAULT false,
+    "creatorId" INTEGER REFERENCES users(id),
+    "isPublic" BOOLEAN DEFAULT false,
     name varchar(255) UNIQUE NOT NULL,
     goal TEXT NOT NULL
   );
   CREATE TABLE routine_activities (
     id SERIAL PRIMARY KEY,
-    routineId INTEGER REFERENCES routines(id),
-    activityId INTEGER REFERENCES activities(id),
+    "routineId" INTEGER UNIQUE REFERENCES routines(id),
+    "activityId" INTEGER UNIQUE REFERENCES activities(id),
     duration INTEGER,
     count INTEGER
   )
