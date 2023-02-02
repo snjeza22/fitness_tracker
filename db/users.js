@@ -15,26 +15,36 @@ async function createUser({ username, password }) {
   }
 
 
-// async function getUser({ username, password }) {
+async function getUser({ username, password }) {
+    const sql = `SELECT username, password FROM users
+      WHERE username = $1 and password = $2`
+    const { rows: [ user ]} = await client.query(sql,[username,password])
+    if (user){
+  delete user.password
+      }
+  return user
+ }
 
-// }
-
-// async function getUserById(userId) {
-
-// }
+ async function getUserById(userId) {
+  const { rows: [ user ]} = await client.query(`
+      SELECT id FROM users
+      WHERE id = $1
+  `, [userId])
+  return user
+ }
+ 
 
  async function getUserByUsername(userName) {
   const { rows: [ user ]} = await client.query(`
       SELECT username, password FROM users
-      WHERE id = 3
-  `)
-  console.log(user, "THIS IS USER")
+      WHERE username = $1
+  `, [userName])
   return user
  }
 
 module.exports = {
   createUser,
-  //getUser,
-  //getUserById,
+  getUser,
+  getUserById,
   getUserByUsername,
 }
