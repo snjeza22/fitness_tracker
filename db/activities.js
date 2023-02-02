@@ -41,6 +41,12 @@ return activity
 
 // async function attachActivitiesToRoutines(routines) {
 //   // select and return an array of all activities
+
+// const {rows: [routineWA]} = await client.query(`
+// // SELECT "creatorId" FROM routines
+// // INNER JOIN routine_activities
+// // ON routines."creatorId"= routine_activities."routineId"
+// `)
 // }
 
 // async function updateActivity({ id, ...fields }) {
