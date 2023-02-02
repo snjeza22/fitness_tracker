@@ -137,7 +137,7 @@ describe("DB Routines", () => {
     });
   });
 
-  describe("getAllRoutines", () => {
+  describe("getAllRoutines", () => {//Snjezana
     it("should include the public routine", async () => {
       const routines = await getAllRoutines();
       expectRoutinesToContainRoutine(routines, fakeRoutine);
@@ -155,7 +155,7 @@ describe("DB Routines", () => {
       expectRoutineToContainActivity(routine, fakeActivity2);
     });
 
-    xit("should not include a routine more than once", async () => {
+    it("should not include a routine more than once", async () => {
       const routines = await getAllRoutines();
       expectRoutinesNotToContainDuplicates(routines, fakeRoutine);
     });
@@ -187,7 +187,7 @@ describe("DB Routines", () => {
     });
   });
 
-  describe("getAllPublicRoutines", () => {
+  describe("getAllPublicRoutines", () => {//Lex
     xit("should include the public routine", async () => {
       const routines = await getAllPublicRoutines();
       expectRoutinesToContainRoutine(routines, fakeRoutine);
@@ -237,7 +237,7 @@ describe("DB Routines", () => {
     });
   });
 
-  describe("getAllRoutinesByUser", () => {
+  describe("getAllRoutinesByUser", () => {//Lex
     xit("should get the public routine for the user", async () => {
       const routines = await getAllRoutinesByUser(fakeUser);
       expectRoutinesToContainRoutine(routines, fakeRoutine);
@@ -293,7 +293,7 @@ describe("DB Routines", () => {
     });
   });
 
-  describe("getPublicRoutinesByUser", () => {
+  describe("getPublicRoutinesByUser", () => {//Lex
     xit("should include the public routine", async () => {
       const routines = await getPublicRoutinesByUser(fakeUser);
       expectRoutinesToContainRoutine(routines, fakeRoutine);
@@ -344,7 +344,7 @@ describe("DB Routines", () => {
     });
   });
 
-  describe("getPublicRoutinesByActivity", () => {
+  describe("getPublicRoutinesByActivity", () => {//Snjezana
     xit("should include the public routine containing a specific activityId", async () => {
       const routines = await getPublicRoutinesByActivity(fakeActivity);
       expectRoutinesToContainRoutineWithActivity(
