@@ -34,7 +34,8 @@ const { rows: routine} = await client.query(`
 async function getAllRoutines() {
 
   const { rows: routine} = await client.query(`
-  SELECT * FROM routines WHERE "isPublic"= true;
+  SELECT * FROM routines 
+  WHERE "isPublic"= false OR true
   `);
   return routine
 }
