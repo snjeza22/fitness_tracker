@@ -16,7 +16,7 @@ async function getRoutineById(id) {
   const { rows: [ routine ] } = await client.query(`
       SELECT "creatorId", "isPublic", name, goal
       FROM users
-      WHERE id=${ id }
+      WHERE id= ${ id }
     `);
 
     return routine;
@@ -34,19 +34,27 @@ const { rows: routine} = await client.query(`
 async function getAllRoutines() {
 
   const { rows: routine} = await client.query(`
-  SELECT * FROM routines 
-  WHERE "isPublic"= false OR true
+  SELECT * FROM routines
+  WHERE "isPublic" IN (true, false)
   `);
+
+  (`
+  SELECT users.username as "creatorName"
+  FROM users
+  RIGHT JOIN routines
+  ON routines."creatorId" = users.id
+  `)
+  //username, from users join, aliased as creatorName
   return routine
 }
 
-// async function getAllPublicRoutines() {}
+// async function getAllPublicRoutines() {} LEX
 
-// async function getAllRoutinesByUser({ username }) {}
+// async function getAllRoutinesByUser({ username }) {}LEX
 
-// async function getPublicRoutinesByUser({ username }) {}
+// async function getPublicRoutinesByUser({ username }) {}LEX
 
-// async function getPublicRoutinesByActivity({ id }) {}
+// async function getPublicRoutinesByActivity({ id }) {}SNJEZANA
 
 // async function updateRoutine({ id, ...fields }) {}
 
