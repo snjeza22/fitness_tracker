@@ -22,9 +22,22 @@ async function getAllActivities() {
 //   // select and return an array of all activities
  }
 
-// async function getActivityById(id) {}
+async function getActivityById(id) {
+const {rows: [activity]}= await client.query(`
+SELECT *
+FROM activities
+WHERE id= $1`, [id]);
+return activity
+}
 
-// async function getActivityByName(name) {}
+async function getActivityByName(name) {
+  const { rows: [ activity ]} = await client.query(`
+  SELECT * FROM activities
+  WHERE name= $1
+  
+`, [name])
+return activity
+}
 
 // async function attachActivitiesToRoutines(routines) {
 //   // select and return an array of all activities
@@ -38,8 +51,8 @@ async function getAllActivities() {
 
 module.exports = {
   getAllActivities,
-  //getActivityById,
-  //getActivityByName,
+  getActivityById,
+  getActivityByName,
   //attachActivitiesToRoutines,
   createActivity,
   //updateActivity,
