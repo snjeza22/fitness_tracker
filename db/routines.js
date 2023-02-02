@@ -31,13 +31,13 @@ const { rows: routine} = await client.query(`
   return routine
 }
 
-// async function getAllRoutines() {
+async function getAllRoutines() {
 
-//   const { rows: routine} = await client.query(`
-//   SELECT * FROM routines
-//   `);
-//   return routine
-// }
+  const { rows: routine} = await client.query(`
+  SELECT * FROM routines WHERE "isPublic"= true;
+  `);
+  return routine
+}
 
 // async function getAllPublicRoutines() {}
 
@@ -54,7 +54,7 @@ const { rows: routine} = await client.query(`
 module.exports = {
   getRoutineById,
   getRoutinesWithoutActivities,
-  //getAllRoutines,
+  getAllRoutines,
   // getAllPublicRoutines,
   // getAllRoutinesByUser,
   // getPublicRoutinesByUser,
