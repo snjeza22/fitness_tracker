@@ -33,29 +33,50 @@ const { rows: routine} = await client.query(`
 
 async function getAllRoutines() {
 
-  const { rows: routine} = await client.query(`
-  SELECT routines.*, duration, routine_activities.count, activities.id AS "activityId", activities.name, description, username as creatorName
+  const { rows } = await client.query(`
+  SELECT routines.*, duration, count, activities.id AS "activityId", activities.name as "activityName", description, username as "creatorName"
   FROM routines
-  JOIN routine_activities ON routines.id=routine_activities."routineId"
-  JOIN activities ON routine_activities."activityId"=activities.id
-  JOIN users ON users.id=routines."creatorId"
-  WHERE "isPublic" IN (true, false)
-  `);
-
+  JOIN routine_activities ON routines.id = routine_activities."routineId"
+  JOIN activities ON activities.id = routine_activities."activityId"
+  JOIN users ON "creatorId"= users.id
+  
+  `)
+let routines = attachedActivitiesToRoutines(rows);
+  routines = Object.values (routines)
+  return routines
+}
   //username, from users join, aliased as creatorName
   // skipped includes their activities
   // skipped includes duration and count on activities, from routine_activities join
   //skipped includes the routineId and routineActivityId on activities
-  return routine
+  
+const attachedActivitiesToRoutines = (routines) => {
+  const routinesById = {};
+  routines.forEach((routine) => {
+    if (!routinesById[routine.id]){
+      routinesById[routine.id] = {
+        id: routine.id,
+        creatorId: routine.creatorId,
+        isPublic: routine.isPublic,
+        name: routine.name,
+        goal: routine.goal,
+        activities: [],
+      }
+    }
+    const activity = {
+      name: routine.activityName,
+      id: routine.activityId,
+      description: routine.description,
+      count: routine.count,
+      duration: routine.duration,
+    }
+    routinesById[routine.id].activities.push(activity);
+  });
+  return routinesById;
 }
+//async function getAllPublicRoutines() {
 
-async function getAllPublicRoutines() {
-  const { rows: routine} = await client.query(`
-SELECT * FROM routines
-  WHERE "isPublic" = true
-`);
-return routine
-}
+//}
 // async function getAllRoutinesByUser({ username }) {}LEX
 
 // async function getPublicRoutinesByUser({ username }) {}LEX
@@ -70,7 +91,7 @@ module.exports = {
   getRoutineById,
   getRoutinesWithoutActivities,
   getAllRoutines,
-  getAllPublicRoutines,
+  //getAllPublicRoutines,
   // getAllRoutinesByUser,
   // getPublicRoutinesByUser,
   //getPublicRoutinesByActivity,
