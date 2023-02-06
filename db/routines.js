@@ -1,5 +1,5 @@
 const client = require("./client");
-const { getUserByUsername } = require("./users");
+//const { getUserByUsername } = require("./users");
 const { attachActivitiesToRoutines} =require("./activities")
 
 async function createRoutine({ creatorId, isPublic, name, goal }) {
@@ -91,11 +91,10 @@ let routines = attachActivitiesToRoutines(rows);
 
 
 async function getAllPublicRoutines() {
- let routines = getAllRoutines();
- routines = Object.values(routines);
- if(routines.isPublic){
+  const { rows: routines} = await client.query(`
+  SELECT * FROM routines
+  WHERE "isPublic"= true;`);
   return routines
- }
 }
 // async function getAllRoutinesByUser({ username }) {}LEX
 
