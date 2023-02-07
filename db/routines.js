@@ -1,4 +1,6 @@
 const client = require("./client");
+//const { getUserByUsername } = require("./users");
+const { attachActivitiesToRoutines} =require("./activities")
 
 async function createRoutine({ creatorId, isPublic, name, goal }) {
 
@@ -16,7 +18,7 @@ async function getRoutineById(id) {
   const { rows: [ routine ] } = await client.query(`
       SELECT "creatorId", "isPublic", name, goal
       FROM users
-      WHERE id=${ id }
+      WHERE id= ${ id }
     `);
 
     return routine;
@@ -87,6 +89,11 @@ async function getAllRoutines() {
   
   return newRoutines
 }
+  //username, from users join, aliased as creatorName
+  // skipped includes their activities
+  // skipped includes duration and count on activities, from routine_activities join
+  //skipped includes the routineId and routineActivityId on activities
+  
 
 async function getAllPublicRoutines() {
   const { rows: routine } = await client.query(`
@@ -101,11 +108,17 @@ async function getAllPublicRoutines() {
   return routine
 }
 
-// async function getAllRoutinesByUser({ username }) {}
+async function getAllPublicRoutines() {
+  const { rows: routines} = await client.query(`
+  SELECT * FROM routines
+  WHERE "isPublic"= true;`);
+  return routines
+}
+// async function getAllRoutinesByUser({ username }) {}LEX
 
-// async function getPublicRoutinesByUser({ username }) {}
+// async function getPublicRoutinesByUser({ username }) {}LEX
 
-// async function getPublicRoutinesByActivity({ id }) {}
+// async function getPublicRoutinesByActivity({ id }) {}SNJEZANA
 
 // async function updateRoutine({ id, ...fields }) {}
 

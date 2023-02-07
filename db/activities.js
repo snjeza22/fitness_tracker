@@ -3,7 +3,7 @@ const client = require('./client');
 // database functions
 async function createActivity({ name, description }) {
   // return the new activity
-  const { rows: [ activity ] } = await client.query(`
+  const { rows: [activity]  } = await client.query(`
       INSERT INTO activities (name, description) 
       VALUES($1, $2)
       RETURNING *;
@@ -39,16 +39,35 @@ async function getActivityByName(name) {
 return activity
 }
 
-// async function attachActivitiesToRoutines(routines) {
-//   // select and return an array of all activities
+const attachActivitiesToRoutines = (routines) => {
+  const routinesById = {};
+  routines.forEach((routine) => {
+    if (!routinesById[routine.id]){
+      routinesById[routine.id] = {
+        id: routine.id,
+        creatorId: routine.creatorId,
+        isPublic: routine.isPublic,
+        name: routine.name,
+        goal: routine.goal,
+        
+        activities: [],
+      }
+    }
+    const activity = {
+      name: routine.activityName,
+      id: routine.activityId,
+      description: routine.description,
+      count: routine.count,
+      duration: routine.duration,
+      routineActivityId: routine.routineActivityId,
+    
+   }
+   
+   routinesById[routine.id].activities.push(activity);
+ });
+ return routinesById;
 
-// const {rows: [routineWA]} = await client.query(`
-// // SELECT "creatorId" FROM routines
-// // INNER JOIN routine_activities
-// // ON routines."creatorId"= routine_activities."routineId"
-// `)
-// }
-
+}
 // async function updateActivity({ id, ...fields }) {
 //   // don't try to update the id
 //   // do update the name and description
@@ -59,7 +78,7 @@ module.exports = {
   getAllActivities,
   getActivityById,
   getActivityByName,
-  //attachActivitiesToRoutines,
+  attachActivitiesToRoutines,
   createActivity,
   //updateActivity,
 };
