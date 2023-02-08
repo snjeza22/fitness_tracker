@@ -108,9 +108,7 @@ async function getAllRoutinesByUser({ username }) {
 }
 
 async function getPublicRoutinesByUser({ username }) {
-  const routinePbl = await getAllRoutines(`
-  SELECT * FROM routines
-  WHERE "creatorName' = ${username}`)
+  const routinePbl = await getAllRoutines()
   const publicRoutines = routinePbl.filter((routine)=>{return routine.isPublic == true})
 
     return publicRoutines
