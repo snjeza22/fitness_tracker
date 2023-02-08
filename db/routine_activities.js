@@ -15,7 +15,15 @@ return addRoutine;
 }
 
 
-// async function getRoutineActivityById(id) {}
+async function getRoutineActivityById(id) {
+  const { rows: [ addRoutine ] } = await client.query(`
+  SELECT "routineId", "activityId", count, duration
+  FROM routine_activities
+  WHERE "avtivityId" = ${ id }
+`);
+
+return addRoutine;
+}//work in progress
 
 // async function getRoutineActivitiesByRoutine({ id }) {}
 
@@ -26,7 +34,7 @@ return addRoutine;
 // async function canEditRoutineActivity(routineActivityId, userId) {}
 
 module.exports = {
-  //getRoutineActivityById,
+  getRoutineActivityById,
   addActivityToRoutine,
   // getRoutineActivitiesByRoutine,
   // updateRoutineActivity,
