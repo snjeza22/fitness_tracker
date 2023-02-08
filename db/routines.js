@@ -100,23 +100,21 @@ async function getAllPublicRoutines() {
 
 
 async function getAllRoutinesByUser({ username }) {
-  const routinePbl = await getAllRoutines(`
-  SELECT * FROM routines
-  WHERE "creatorName' = ${username}`)
+  const routinePbl = await getAllRoutines()
 
     return routinePbl
 }
 
 async function getPublicRoutinesByUser({ username }) {
-  const routinePbl = await getAllRoutines()
-  const publicRoutines = routinePbl.filter((routine)=>{return routine.isPublic == true})
+  const routinePbl = await getAllPublicRoutines()
+  
 
-    return publicRoutines
+    return routinePbl
 }
 
 async function getPublicRoutinesByActivity({ id }) {
-  const pblAct = await getAllPublicRoutines(`
-  SELECT * FROM routines`);
+  const pblAct = await getAllPublicRoutines();
+ 
   return pblAct
 }
 
