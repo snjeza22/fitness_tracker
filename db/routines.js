@@ -105,7 +105,13 @@ async function getAllPublicRoutines() {
 }
 
 
-// async function getAllRoutinesByUser({ username }) {}LEX
+async function getAllRoutinesByUser({ username }) {
+  const routinePbl = await getAllRoutines(`
+  SELECT * FROM routines
+  WHERE "creatorName' = ${username}`)
+
+    return routinePbl
+}
 
 // async function getPublicRoutinesByUser({ username }) {}LEX
 
@@ -124,7 +130,7 @@ module.exports = {
   getRoutinesWithoutActivities,
   getAllRoutines,
   getAllPublicRoutines,
-  // getAllRoutinesByUser,
+  getAllRoutinesByUser,
   // getPublicRoutinesByUser,
   getPublicRoutinesByActivity,
   createRoutine,
