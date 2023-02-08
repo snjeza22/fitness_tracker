@@ -58,9 +58,6 @@ async function getAllRoutines() {
       newRoutines.push(routineLib[routId]);
     } 
   );
-  
-
-  
   newRoutines.forEach( (newRoutine) => {
     const matchingIndexes = routines.filter( (r) => {return r.id === newRoutine.id  } );
 
@@ -96,13 +93,10 @@ async function getAllRoutines() {
   
 
 async function getAllPublicRoutines() {
-  const routinePbl = await getAllRoutines(`
-  SELECT * FROM routines`)
-
-    return routinePbl
-  
-  
-}
+  const routinePbl = await getAllRoutines()
+    const publicRoutines = routinePbl.filter((routine)=>{return routine.isPublic == true})
+    return publicRoutines
+  }
 
 
 async function getAllRoutinesByUser({ username }) {
@@ -113,7 +107,14 @@ async function getAllRoutinesByUser({ username }) {
     return routinePbl
 }
 
-// async function getPublicRoutinesByUser({ username }) {}LEX
+async function getPublicRoutinesByUser({ username }) {
+  const routinePbl = await getAllRoutines(`
+  SELECT * FROM routines
+  WHERE "creatorName' = ${username}`)
+  console.log(username)
+
+    return routinePbl
+}
 
 async function getPublicRoutinesByActivity({ id }) {
   const pblAct = await getAllPublicRoutines(`
@@ -131,7 +132,7 @@ module.exports = {
   getAllRoutines,
   getAllPublicRoutines,
   getAllRoutinesByUser,
-  // getPublicRoutinesByUser,
+  getPublicRoutinesByUser,
   getPublicRoutinesByActivity,
   createRoutine,
   //updateRoutine,
