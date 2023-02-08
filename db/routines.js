@@ -1,6 +1,6 @@
 const client = require("./client");
 //const { getUserByUsername } = require("./users");
-const { attachActivitiesToRoutines} =require("./activities")
+
 
 async function createRoutine({ creatorId, isPublic, name, goal }) {
 
@@ -85,7 +85,7 @@ async function getAllRoutines() {
 
   }  );
   
-  console.log('NEW ROUTINES', newRoutines);
+
   
   return newRoutines
 }
@@ -96,31 +96,26 @@ async function getAllRoutines() {
   
 
 async function getAllPublicRoutines() {
-  const { rows: routine } = await client.query(`
-  SELECT routines.*, duration, count, activities.id  as "activityId", activities.name, description, username as "creatorName"
-  FROM routines 
-  JOIN routine_activities ON routines.id = routine_activities."routineId"
-  JOIN activities ON activities.id = routine_activities."activityId"
-  JOIN users ON "creatorId" = users.id
-  WHERE "isPublic" = true
-  `);
+  const routinePbl = await getAllRoutines(`
+  SELECT * FROM routines`)
+
+    return routinePbl
   
-  return routine
+  
 }
 
-async function getAllPublicRoutines() {
-  const { rows: routines} = await client.query(`
-  SELECT * FROM routines
-  WHERE "isPublic"= true;`);
-  return routines
-}
+
 // async function getAllRoutinesByUser({ username }) {}LEX
 
 // async function getPublicRoutinesByUser({ username }) {}LEX
 
-// async function getPublicRoutinesByActivity({ id }) {}SNJEZANA
+async function getPublicRoutinesByActivity({ id }) {
+  const pblAct = await getAllPublicRoutines(`
+  SELECT * FROM routines`);
+  return pblAct
+}
 
-// async function updateRoutine({ id, ...fields }) {}
+// async function updateRoutine({ id, ...fields }) {} SNJEZANA
 
 // async function destroyRoutine(id) {}
 
@@ -131,7 +126,7 @@ module.exports = {
   getAllPublicRoutines,
   // getAllRoutinesByUser,
   // getPublicRoutinesByUser,
-  //getPublicRoutinesByActivity,
+  getPublicRoutinesByActivity,
   createRoutine,
   //updateRoutine,
   //destroyRoutine,
