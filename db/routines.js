@@ -114,8 +114,16 @@ async function getPublicRoutinesByUser({ username }) {
 
 async function getPublicRoutinesByActivity({ id }) {
   const pblAct = await getAllPublicRoutines();
-
-  return pblAct
+  const filteredRoutines = pblAct.filter((routine)=>{
+    let include = false;
+    routine.activities.forEach((act)=>{
+      if(act.id === id){
+        include = true
+      }
+    })
+    return include;
+  })
+  return filteredRoutines;
 }
 
 // async function updateRoutine({ id, ...fields }) {} SNJEZANA
