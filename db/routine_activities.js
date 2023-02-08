@@ -17,9 +17,9 @@ return addRoutine;
 
 async function getRoutineActivityById(id) {
   const { rows: [ addRoutine ] } = await client.query(`
-  SELECT "routineId", "activityId", count, duration
+  SELECT *
   FROM routine_activities
-  WHERE "avtivityId" = ${ id }
+  WHERE id = ${ id }
 `);
 
 return addRoutine;

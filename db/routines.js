@@ -114,7 +114,7 @@ async function getPublicRoutinesByUser({ username }) {
 
 async function getPublicRoutinesByActivity({ id }) {
   const pblAct = await getAllPublicRoutines();
- 
+
   return pblAct
 }
 
