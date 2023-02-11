@@ -126,9 +126,28 @@ async function getPublicRoutinesByActivity({ id }) {
   return filteredRoutines;
 }
 
-// async function updateRoutine({ id, ...fields }) {} SNJEZANA
+async function updateRoutine({ id, ...fields }) {
+    const keys = Object.keys(fields)
+    
+    let updateSQL = "UPDATE routines SET "
+    for (let i = 0; i<keys.length; i++){
+      let comma = ","
+      if (i===keys.length-1){comma = ""}
+      updateSQL = updateSQL + `"${keys[i]}"='${fields[keys[i]]}'${comma}`
+      }
+      updateSQL = updateSQL + " WHERE id=$1;"
+    await client.query(updateSQL, [id]);
+    const selectSQL = "SELECT * FROM routines WHERE id=$1"
+    const { rows: routine} = await client.query(selectSQL,[id])
+   return routine[0]
+  
+       
+} 
 
-// async function destroyRoutine(id) {}
+async function destroyRoutine(id) {
+  await client.query(`DELETE FROM routine_activities WHERE "routineId"=${id}`)
+  await client.query(`DELETE FROM routines WHERE id= ${id}`)
+}
 
 module.exports = {
   getRoutineById,
@@ -139,6 +158,6 @@ module.exports = {
   getPublicRoutinesByUser,
   getPublicRoutinesByActivity,
   createRoutine,
-  //updateRoutine,
-  //destroyRoutine,
+  updateRoutine,
+  destroyRoutine,
 };

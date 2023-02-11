@@ -14,7 +14,7 @@ async function dropTables() {
 }
 
 async function createTables() {
-  console.log("Starting to build tables...")
+  console.log("Starting to build tables???")
   await client.query(`
   CREATE TABLE users (
     id SERIAL PRIMARY KEY,

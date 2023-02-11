@@ -81,7 +81,6 @@ const attachActivitiesToRoutines = (routines) => {
   return routinesById;
 };
 async function updateActivity({ id, ...fields }) {
-  console.log("oni su poslali fileds",id, fields)
   if(fields.name && fields.description){
     const result = await client.query(`
     UPDATE activities
@@ -99,7 +98,6 @@ async function updateActivity({ id, ...fields }) {
     WHERE id=${id}
     RETURNING*
     `);
-    console.log(result)
     return result.rows[0]
   }
   if(!fields.name && fields.description){
@@ -109,7 +107,6 @@ async function updateActivity({ id, ...fields }) {
     WHERE id=${id}
     RETURNING*
     `);
-    console.log(result)
     return result.rows[0]
   }
 }
