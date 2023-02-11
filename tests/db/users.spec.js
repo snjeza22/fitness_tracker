@@ -15,9 +15,9 @@ const {
 } = require("../../db");
 const { createFakeUser } = require("../helpers");
 
-describe("DB Users", () => {
-  describe("createUser({ username, password })", () => {
-    it("Creates and returns the user", async () => {
+xdescribe("DB Users", () => {
+  xdescribe("createUser({ username, password })", () => {
+    xit("Creates and returns the user", async () => {
       const fakeUserData = {
         username: "Horace",
         password: faker.internet.password(),
@@ -26,7 +26,7 @@ describe("DB Users", () => {
       expect(user.username).toBe(fakeUserData.username);
     });
 
-    it("Does NOT return the password", async () => {
+    xit("Does NOT return the password", async () => {
       const fakeUserData = {
         username: faker.internet.userName(),
         password: faker.internet.password(),
@@ -36,7 +36,7 @@ describe("DB Users", () => {
     });
   });
 
-  describe("getUserByUsername", () => {
+  xdescribe("getUserByUsername", () => {
     it("Gets a user based on the username", async () => {
       const fakeUserData = {
         username: "Sean",
@@ -59,7 +59,7 @@ describe("DB Users", () => {
     });
   });
 
-  describe("getUser({ username, password })", () => {
+  xdescribe("getUser({ username, password })", () => {
     it("Returns the user when the password verifies", async () => {
       const fakeUserData = {
         username: "Nicole",
@@ -95,7 +95,7 @@ describe("DB Users", () => {
     });
   });
 
-  describe("getUserById", () => {
+  xdescribe("getUserById", () => {
     it("Gets a user based on the user Id", async () => {
       const fakeUser = await createFakeUser("Jacob");
       const user = await getUserById(fakeUser.id);

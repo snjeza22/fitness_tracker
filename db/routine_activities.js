@@ -35,17 +35,34 @@ async function getRoutineActivitiesByRoutine({ id }) {
 return rows;
 }
 
-// async function updateRoutineActivity({ id, ...fields }) {}
+ async function updateRoutineActivity({ id, ...fields }) {
+   const keys = Object.keys(fields)
+    
+    let updateSQL = "UPDATE routine_activities SET "
+    for (let i = 0; i<keys.length; i++){
+      let comma = ","
+      if (i===keys.length-1){comma = ""}
+      updateSQL = updateSQL + `"${keys[i]}"='${fields[keys[i]]}'${comma}`
+      }
+      updateSQL = updateSQL + " WHERE id=$1;"
+    await client.query(updateSQL, [id]);
+    const selectSQL = "SELECT * FROM routine_activities WHERE id=$1"
+    const { rows: routine} = await client.query(selectSQL,[id])
+   return routine[0]
+ }
 
-// async function destroyRoutineActivity(id) {}
+async function destroyRoutineActivity(id) {
+  await client.query(`DELETE FROM routine_activities WHERE "routineId"=${id}`)
+  console.log("id",id)
+}
 
-// async function canEditRoutineActivity(routineActivityId, userId) {}
+async function canEditRoutineActivity(routineActivityId, userId) {}
 
 module.exports = {
   getRoutineActivityById,
   addActivityToRoutine,
   getRoutineActivitiesByRoutine,
-  // updateRoutineActivity,
-  // destroyRoutineActivity,
-  // canEditRoutineActivity,
+  updateRoutineActivity,
+  destroyRoutineActivity,
+  canEditRoutineActivity,
 };
