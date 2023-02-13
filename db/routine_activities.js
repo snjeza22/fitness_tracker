@@ -52,8 +52,14 @@ return rows;
  }
 
 async function destroyRoutineActivity(id) {
-  await client.query(`DELETE FROM routine_activities WHERE "routineId"=${id}`)
-  console.log("id",id)
+  const p = await client.query(
+    `DELETE FROM routine_activities WHERE "routineId"= ${id} RETURNING * `
+  );
+  
+  //return p.rows[0]
+  if (p.rows[0] && p.rows[0].id) {
+    return p.rows[0];
+  }
 }
 
 async function canEditRoutineActivity(routineActivityId, userId) {
