@@ -18,8 +18,6 @@ app.use((req, res, next)=>{
 //error handler
 
 app.use((err, req, res, next)=>{
-  console.log("error handler")
-  console.log(err.message)
   res.send({
     message: err.message,
     error: err.message,

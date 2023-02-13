@@ -14,7 +14,7 @@ async function createUser({ username, password }) {
   }
   // step 0: check if user name exists
   const results = await getUserByUsername(username);
-  console.log(results, "results potencijalni duplikat");
+
   if (results && results.username) {
     throw new Error(errors.UserTakenError(username));
   }
@@ -30,19 +30,7 @@ async function createUser({ username, password }) {
     [username, password]
   );
   delete user.password;
-  //console.log(user, "korisnik")
-  //step 2: creating token
-  // const token = await jwt.sign(
-  //   { id: user.id, username: user.username },
-  //   JWT_SECRET,
-  //   { expiresIn: "1w" }
-  // );
-  // const obj = {
-  //   user: user,
-  //   token: token,
-  //   message: "You have succesfully registred",
-  // };
-  //console.log(obj)
+ 
   return user;
 }
 
@@ -88,7 +76,7 @@ async function getUserById(userId) {
 }
 
 async function getUserByUsername(userName) {
-  console.log(userName);
+  
   const results = await client.query(
     `
       SELECT username FROM users
@@ -96,7 +84,7 @@ async function getUserByUsername(userName) {
   `,
     [userName]
   );
-  console.log(results.rows, "nas user potencijalni duplicat");
+  
   return results.rows[0];
 }
 
